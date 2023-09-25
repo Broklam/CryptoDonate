@@ -40,11 +40,11 @@ type Donations struct {
 	Accounted bool
 }
 
-type accoint struct {
+type accounting struct {
 	StreamerId int 
 	InBtc float64
 	InTon float64
-	outBtc float64
+	OutBtc float64
 	OutTon float64
 	OutEth float64
 }

@@ -1,11 +1,16 @@
 package main
 
 import (
-	"fmt"
+	//"fmt"
 
+	storage "github.com/Broklam/cryptodonate/backend/db"
+	"github.com/Broklam/cryptodonate/backend/server"
 	//"github.com/Broklam/cryptodonate/backend/db"
 )
 
 func main() {
-	fmt.Println("vim-go")
+	storage.Connect()
+	storage.Migrate()
+	router := server.InitRouter()
+	router.Run(":8080")
 }
