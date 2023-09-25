@@ -10,7 +10,7 @@ func InitRouter() *gin.Engine {
 	api := router.Group("/api")
 	{
 		api.GET("/searchName", controllers.FindStreamerByName)
-
+		api.POST("/publicregister", nil)
 	}
 	return router
 }

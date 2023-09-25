@@ -10,6 +10,7 @@ import (
 )
 
 var PublicStreamers types.PublicStreamers
+var PrivateStreamers types.PrivateStreamers
 var Instance *gorm.DB
 var dbError error
 var p string = "../db/data.db"
@@ -27,5 +28,6 @@ func Connect() {
 func Migrate() {
 	// Auto migrate the User model to the SQLite database
 	Instance.AutoMigrate(&PublicStreamers)
+	Instance.AutoMigrate(&PrivateStreamers)
 	log.Println("Database Migration Completed!")
 }
