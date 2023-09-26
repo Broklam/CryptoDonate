@@ -35,6 +35,7 @@ type Donation struct {
 	Amount        float64 `json:"Amount"`
 	PublicWallet  string  `json:"PublicWallet"`
 	PrivateWallet string  `json:"PrivateWallet"`
+	Address       string  `json:"Address"`
 	Status        uint8   `json:"Status"`
 }
 

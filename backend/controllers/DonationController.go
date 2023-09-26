@@ -15,6 +15,12 @@ func CreateDonation(context *gin.Context) {
 		context.Abort()
 		return
 	}
+
+	private_key, publickey, address := CreateBtcWallet()
+	Donation.PublicWallet = publickey
+	Donation.PrivateWallet = private_key
+	Donation.Address = address
+
 	record := storage.Instance.Create(&Donation)
 
 	if record.Error != nil {
@@ -23,6 +29,6 @@ func CreateDonation(context *gin.Context) {
 		return
 	}
 	//Generate wallet
-	context.JSON(http.StatusCreated, gin.H{"From": Donation.From, "To": Donation.Nickname, "Coin": Donation.Coin, "Amount": Donation.Amount, "Address": Donation.PublicWallet, "Status": "Created"})
+	context.JSON(http.StatusCreated, gin.H{"From": Donation.From, "To": Donation.Nickname, "Coin": Donation.Coin, "Amount": Donation.Amount, "Address": Donation.Address, "Status": "Created"})
 	//context.JSON(http.StatusCreated, gin.H{"Status": "Donation was created", "From": Donation.From, "To": Donation.Nickname, "Coin": Donation.Coin, "Amount": Donation.Amount, "Address": Donation.PublicWallet})
 }
