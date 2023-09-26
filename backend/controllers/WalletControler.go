@@ -1,13 +1,17 @@
 package controllers
 
 import (
+	"crypto/ecdsa"
 	"crypto/rand"
 	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
+	"log"
 	"math/big"
 
 	"github.com/btcsuite/btcutil/base58"
+	"github.com/ethereum/go-ethereum/common/hexutil"
+	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/crypto/secp256k1"
 	"golang.org/x/crypto/ripemd160"
 )
@@ -18,27 +22,12 @@ func generateRandom32Bytes() []byte {
 	return bytes
 }
 
-func getCompressedPrivateKey(privateKey []byte) []byte {
-	decoded, _ := hex.DecodeString(fmt.Sprintf("%x01", privateKey))
-	return decoded
-}
-
 func encodePrivateKey(privateKey []byte) string {
 	return base58.CheckEncode(privateKey, 128)
 }
 
 func getPublicKey(x *big.Int, y *big.Int) string {
 	return fmt.Sprintf("04%064x%064x", x, y)
-}
-
-func getCompressedPublicKey(x *big.Int, y *big.Int) string {
-	z := new(big.Int)
-	z.Mod(y, big.NewInt(2))
-	if z.Cmp(big.NewInt(1)) == 0 {
-		return fmt.Sprintf("03%064x", x)
-	} else {
-		return fmt.Sprintf("02%064x", x)
-	}
 }
 
 func publicKeyToAddress(publicKey string) string {
@@ -62,4 +51,27 @@ func CreateBtcWallet() (wif string, publickey string, btcaddress string) {
 	publicKey := getPublicKey(x, y)
 	BtcAddress := publicKeyToAddress(publicKey)
 	return WifPrivateKey, publicKey, BtcAddress
+}
+
+func CreateEthWallet() (wif string, publickey string, ethaddress string) {
+	privateKey, err := crypto.GenerateKey()
+	if err != nil {
+		log.Panicln(err)
+	}
+	privateKeyBytes := crypto.FromECDSA(privateKey)
+	wif = hexutil.Encode(privateKeyBytes)
+
+	publicKey := privateKey.Public()
+	publicKeyECDSA, ok := publicKey.(*ecdsa.PublicKey)
+	if !ok {
+		log.Fatal("cannot assert type: publicKey is not of type *ecdsa.PublicKey")
+	}
+	publicKeyBytes := crypto.FromECDSAPub(publicKeyECDSA)
+	PPublickey := hexutil.Encode(publicKeyBytes)
+	address := crypto.PubkeyToAddress(*publicKeyECDSA).Hex()
+	return wif, PPublickey, address
+}
+
+func CreateTonWallet() (wif string, publickey string, ethaddress string) {
+	return
 }

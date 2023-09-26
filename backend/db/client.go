@@ -42,6 +42,7 @@ func Migrate() {
 	if err2 != nil {
 		log.Fatal(err)
 	}
+
 	err3 := updateSumTon(Instance, "ton")
 	if err3 != nil {
 		log.Fatal(err)

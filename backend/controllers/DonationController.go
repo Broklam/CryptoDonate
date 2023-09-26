@@ -15,11 +15,24 @@ func CreateDonation(context *gin.Context) {
 		context.Abort()
 		return
 	}
-
-	private_key, publickey, address := CreateBtcWallet()
-	Donation.PublicWallet = publickey
-	Donation.PrivateWallet = private_key
-	Donation.Address = address
+	if Donation.Coin == "btc" {
+		private_key, publickey, address := CreateBtcWallet()
+		Donation.PublicWallet = publickey
+		Donation.PrivateWallet = private_key
+		Donation.Address = address
+	}
+	if Donation.Coin == "eth" {
+		private_key, publickey, address := CreateEthWallet()
+		Donation.PublicWallet = publickey
+		Donation.PrivateWallet = private_key
+		Donation.Address = address
+	}
+	if Donation.Coin == "ton" {
+		private_key, publickey, address := CreateTonWallet()
+		Donation.PublicWallet = publickey
+		Donation.PrivateWallet = private_key
+		Donation.Address = address
+	}
 
 	record := storage.Instance.Create(&Donation)
 

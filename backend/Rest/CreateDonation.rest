@@ -4,10 +4,10 @@ POST http://{{host}}/api/donations/create HTTP/1.1
 content-type: application/json
 
 {
-    "From" : "Test of wallet creation",
+    "From" : "JOHNNY",
 	"ToStreamer" : "VovaPain",
-	"Message": "hope it works",
-	"Coin":"ton",
-	"Amount" : 0.1712,      
+	"Message": "POKAZHI ZHOPU!!!!",
+	"Coin":"btc",
+	"Amount" : -1.3404,      
 	"Status": 1
 }	

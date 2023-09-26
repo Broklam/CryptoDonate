@@ -5,9 +5,9 @@
 content-type: application/json
 
 {
-    "Nickname" : "VovaPain",
-    "Description" : "Самый лучший солевой стример на планете ЗЕМЛЯ ",
-    "Telegram": "Test Telegram",
-    "Youtube" : "Test Youtube",
-    "Twitch": "Test Twitch"
+    "Nickname" : "Stray228",
+    "Description" : "Любитель конфет, а также АСУ АСУ ракет",
+    "Telegram": "t.me/StrayDungeon228",
+    "Youtube" : "youtube.com/c/StrayBest",
+    "Twitch": "twitch.tv/stray228"
 }
