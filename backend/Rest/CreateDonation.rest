@@ -4,10 +4,10 @@ POST http://{{host}}/api/donations/create HTTP/1.1
 content-type: application/json
 
 {
-    "From" : "JOHNNY",
+    "From" : "flö",
 	"ToStreamer" : "VovaPain",
-	"Message": "POKAZHI ZHOPU!!!!",
-	"Coin":"btc",
-	"Amount" : -1.3404,      
+	"Message": "Final Donation system test",
+	"Coin":"eth",
+	"Amount" : 1.1,      
 	"Status": 1
 }	

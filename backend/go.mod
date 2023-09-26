@@ -35,10 +35,13 @@ require (
 	github.com/mmcloughlin/addchain v0.4.0 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
+	github.com/oasisprotocol/curve25519-voi v0.0.0-20220328075252-7dd334e3daae // indirect
 	github.com/pelletier/go-toml/v2 v2.0.8 // indirect
+	github.com/sigurn/crc16 v0.0.0-20211026045750-20ab5afb07e3 // indirect
 	github.com/supranational/blst v0.3.11 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.11 // indirect
+	github.com/xssnick/tonutils-go v1.8.3 // indirect
 	golang.org/x/arch v0.3.0 // indirect
 	golang.org/x/net v0.10.0 // indirect
 	golang.org/x/sync v0.3.0 // indirect

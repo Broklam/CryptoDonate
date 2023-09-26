@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"context"
 	"crypto/ecdsa"
 	"crypto/rand"
 	"crypto/sha256"
@@ -13,6 +14,9 @@ import (
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/crypto/secp256k1"
+	"github.com/xssnick/tonutils-go/liteclient"
+	"github.com/xssnick/tonutils-go/ton"
+	"github.com/xssnick/tonutils-go/ton/wallet"
 	"golang.org/x/crypto/ripemd160"
 )
 
@@ -72,6 +76,22 @@ func CreateEthWallet() (wif string, publickey string, ethaddress string) {
 	return wif, PPublickey, address
 }
 
-func CreateTonWallet() (wif string, publickey string, ethaddress string) {
-	return
+func CreateTonWallet() (wif string, publickey string, tonaddress string) {
+	words := wallet.NewSeed()
+	client := liteclient.NewConnectionPool()
+	cfg, err := liteclient.GetConfigFromUrl(context.Background(), "https://ton.org/global.config.json")
+	if err != nil {
+		log.Fatalln("get config err: ", err.Error())
+		return
+	}
+	api := ton.NewAPIClient(client, ton.ProofCheckPolicySecure).WithRetry()
+	api.SetTrustedBlockFromConfig(cfg)
+	w, err := wallet.FromSeed(api, words, wallet.V3)
+	if err != nil {
+		panic(err)
+	}
+	wif = string(w.PrivateKey())
+	tonaddress = w.Address().String()
+	publickey = string(w.Address().Data())
+	return wif, publickey, tonaddress
 }
