@@ -4,11 +4,11 @@ POST http://{{host}}/api/donations/create HTTP/1.1
 content-type: application/json
 
 {
-    "From" : "ff111",
+    "From" : "AAa",
 	"ToStreamer" : "VovaPain",
-	"Message": "Здарова лизун",
-	"Coin":"BTC",
-	"Amount" : 0.001,      
+	"Message": "З12дарова лизун",
+	"Coin":"ton",
+	"Amount" : 0.77,      
 	"PublicWallet":"PUBLIC ADRESS PLACEHOLDER",
-	"Status": 0
-}
+	"Status": 1
+}	

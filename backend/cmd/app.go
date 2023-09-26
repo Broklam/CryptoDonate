@@ -11,6 +11,7 @@ import (
 func main() {
 	storage.Connect()
 	storage.Migrate()
+	storage.BalanceSum()
 	router := server.InitRouter()
 	router.Run(":8080")
 
