@@ -26,23 +26,7 @@ func Connect() {
 func Migrate() {
 	// Auto migrate the User model to the SQLite database
 	Instance.AutoMigrate(&types.User{}, &types.Streamer{}) //&types.Donation{})
-	Instance.Callback().Create().After("gorm:commit_or_rollback_transaction").Register("update_streamer_balances", func(db *gorm.DB) {
-		if streamer, ok := db.Statement.Dest.(*types.Streamer); ok {
-			updateStreamerBalances(db, streamer)
-		}
-	})
 
-	Instance.Callback().Update().After("gorm:commit_or_rollback_transaction").Register("update_streamer_balances", func(db *gorm.DB) {
-		if streamer, ok := db.Statement.Dest.(*types.Streamer); ok {
-			updateStreamerBalances(db, streamer)
-		}
-	})
-
-	Instance.Callback().Delete().After("gorm:commit_or_rollback_transaction").Register("update_streamer_balances", func(db *gorm.DB) {
-		if streamer, ok := db.Statement.Dest.(*types.Streamer); ok {
-			updateStreamerBalances(db, streamer)
-		}
-	})
 	log.Println("Database Migration Completed!")
 }
 

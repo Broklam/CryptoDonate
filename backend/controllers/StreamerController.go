@@ -42,5 +42,5 @@ func RegisterFullStreamer(context *gin.Context) {
 	}
 
 	// Respond with a success message or the created streamer data.
-	context.JSON(http.StatusCreated, streamer)
+	context.JSON(http.StatusCreated, "ok")
 }

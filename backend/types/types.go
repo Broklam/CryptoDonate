@@ -15,7 +15,7 @@ type User struct {
 
 // Define the Streamer struct
 type Streamer struct {
-	Nickname    string     `gorm:"primaryKey" json:"Nickname"`
+	Nickname    string     `gorm:"unique; primaryKey" json:"Nickname"`
 	Description string     ` json:"Description"`
 	BTCBalance  float64    `json:"BTCBalance"`
 	ETHBalance  float64    `json:"ETHBalance"`
