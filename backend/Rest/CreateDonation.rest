@@ -1,0 +1,14 @@
+@host = localhost:8080
+
+POST http://{{host}}/api/donations/create HTTP/1.1
+content-type: application/json
+
+{
+    "From" : "ff111",
+	"ToStreamer" : "VovaPain",
+	"Message": "Здарова лизун",
+	"Coin":"BTC",
+	"Amount" : 0.001,      
+	"PublicWallet":"PUBLIC ADRESS PLACEHOLDER",
+	"Status": 0
+}

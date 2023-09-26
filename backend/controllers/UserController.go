@@ -22,6 +22,7 @@ func RegisterUser(context *gin.Context) {
 		return
 	}
 	record := storage.Instance.Create(&user)
+
 	if record.Error != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": record.Error.Error()})
 		context.Abort()

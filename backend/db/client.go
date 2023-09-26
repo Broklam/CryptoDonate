@@ -25,7 +25,7 @@ func Connect() {
 
 func Migrate() {
 	// Auto migrate the User model to the SQLite database
-	Instance.AutoMigrate(&types.User{}, &types.Streamer{}) //&types.Donation{})
+	Instance.AutoMigrate(&types.User{}, &types.Streamer{}, &types.Donation{}) //&types.Donation{})
 
 	log.Println("Database Migration Completed!")
 }
@@ -36,7 +36,7 @@ func updateStreamerBalances(db *gorm.DB, streamer *types.Streamer) {
 		TotalETH float64
 		TotalTON float64
 	}
-	//db.Model(&types.Donation{}).Where("to_user = ?", streamer.Nickname).Select("SUM(amount) as total_btc, coin").Group("coin").Scan(&balances)
+	db.Model(&types.Donation{}).Where("to_user = ?", streamer.Nickname).Select("SUM(amount) as total_btc, coin").Group("coin").Scan(&balances)
 
 	streamer.BTCBalance = balances.TotalBTC
 	streamer.ETHBalance = balances.TotalETH

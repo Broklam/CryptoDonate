@@ -5,8 +5,9 @@
 content-type: application/json
 
 {
-    "Username":"VovaSolevoy",
     "Nickname" : "VovaPain",
-    "Password" : "LizatOchenVkusno",
-    "Role": 1
+    "Description" : "Самый лучший солевой стример на планете ЗЕМЛЯ ",
+    "Telegram": "Test Telegram",
+    "Youtube" : "Test Youtube",
+    "Twitch": "Test Twitch"
 }

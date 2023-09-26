@@ -11,6 +11,7 @@ func InitRouter() *gin.Engine {
 	{
 		api.POST("/user/register", controllers.RegisterUser)
 		api.POST("/user/register/streamer/full", controllers.RegisterFullStreamer)
+		api.POST("/donations/create", controllers.CreateDonation)
 
 		//secured := api.Group("/secured").Use(middlewares.Auth())
 		//{

@@ -28,13 +28,13 @@ type Streamer struct {
 
 // Define the Donation struct
 type Donation struct {
-	From          string  `gorm:"primaryKey" json:"From"`
+	From          string  `json:"From"`
 	Nickname      string  `json:"ToStreamer"`
 	Message       string  `json:"Message"`
 	Coin          string  `json:"Coin"`
 	Amount        float64 `json:"Amount"`
-	PublicWallet  string  `gorm:"unique" json:"PublicWallet"`
-	PrivateWallet string  `gorm:"unique" json:"PrivateWallet"`
+	PublicWallet  string  `json:"PublicWallet"`
+	PrivateWallet string  `json:"PrivateWallet"`
 	Status        uint8   `json:"Status"`
 }
 
