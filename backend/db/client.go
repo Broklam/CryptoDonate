@@ -9,8 +9,6 @@ import (
 	"gorm.io/gorm"
 )
 
-var PublicStreamers types.PublicStreamers
-var PrivateStreamers types.PrivateStreamers
 var Instance *gorm.DB
 var dbError error
 var p string = "../db/data.db"
@@ -27,7 +25,38 @@ func Connect() {
 
 func Migrate() {
 	// Auto migrate the User model to the SQLite database
-	Instance.AutoMigrate(&PublicStreamers)
-	Instance.AutoMigrate(&PrivateStreamers)
+	Instance.AutoMigrate(&types.User{}, &types.Streamer{}) //&types.Donation{})
+	Instance.Callback().Create().After("gorm:commit_or_rollback_transaction").Register("update_streamer_balances", func(db *gorm.DB) {
+		if streamer, ok := db.Statement.Dest.(*types.Streamer); ok {
+			updateStreamerBalances(db, streamer)
+		}
+	})
+
+	Instance.Callback().Update().After("gorm:commit_or_rollback_transaction").Register("update_streamer_balances", func(db *gorm.DB) {
+		if streamer, ok := db.Statement.Dest.(*types.Streamer); ok {
+			updateStreamerBalances(db, streamer)
+		}
+	})
+
+	Instance.Callback().Delete().After("gorm:commit_or_rollback_transaction").Register("update_streamer_balances", func(db *gorm.DB) {
+		if streamer, ok := db.Statement.Dest.(*types.Streamer); ok {
+			updateStreamerBalances(db, streamer)
+		}
+	})
 	log.Println("Database Migration Completed!")
+}
+
+func updateStreamerBalances(db *gorm.DB, streamer *types.Streamer) {
+	var balances struct {
+		TotalBTC float64
+		TotalETH float64
+		TotalTON float64
+	}
+	//db.Model(&types.Donation{}).Where("to_user = ?", streamer.Nickname).Select("SUM(amount) as total_btc, coin").Group("coin").Scan(&balances)
+
+	streamer.BTCBalance = balances.TotalBTC
+	streamer.ETHBalance = balances.TotalETH
+	streamer.TONBalance = balances.TotalTON
+
+	db.Save(streamer)
 }

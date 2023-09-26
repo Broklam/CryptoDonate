@@ -25,21 +25,6 @@ type Params struct {
 	KeyLength   uint32
 }
 
-func Work() {
-
-	encodedHash, err := GenerateFromPassword("password123")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	match, err := ComparePasswordAndHash("password123", encodedHash)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	fmt.Printf("Match: %v\n", match)
-}
-
 func ComparePasswordAndHash(password, encodedHash string) (match bool, err error) {
 	// Extract the parameters, salt and derived key from the encoded password
 	// hash.
@@ -105,7 +90,7 @@ func GenerateFromPassword(password string) (encodedHash string, err error) {
 	}
 	salt, err := generateRandomBytes(p1.SaltLength)
 	if err != nil {
-		return "", err
+		log.Println(err)
 	}
 
 	hash := argon2.IDKey([]byte(password), salt, p1.Iterations, p1.Memory, p1.Parallelism, p1.KeyLength)
@@ -115,7 +100,8 @@ func GenerateFromPassword(password string) (encodedHash string, err error) {
 	b64Hash := base64.RawStdEncoding.EncodeToString(hash)
 
 	// Return a string using the standard encoded hash representation.
-	encodedHash = fmt.Sprintf("$argon2id$v=%d$m=%d,t=%d,p=%d$%s$%s", argon2.Version, p1.Memory, p1.Iterations, p1.Parallelism, b64Salt, b64Hash)
+
+	encodedHash = "$argon2id$v=%d$m=%d,t=%d,p=%d$%s$%s" + string(argon2.Version) + string(p1.Memory) + string(p1.Iterations) + string(p1.Parallelism) + string(b64Salt) + string(b64Hash)
 
 	return encodedHash, nil
 }

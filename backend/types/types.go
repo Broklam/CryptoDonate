@@ -1,56 +1,48 @@
 package types
 
 import (
-	"gorm.io/gorm"
+	"github.com/Broklam/cryptodonate/backend/encrypt"
 )
 
-type Users struct {
-	gorm.Model
-	Username     string `json:"Username" gorm:"unique"`
-	PasswordHash string `json:"PasswordHash"`
-	Role         uint8  `json:"Role"` //0,1,2 as follows user, streamer,admin
-}
-type PublicStreamers struct {
-	gorm.Model
-	Nickname    string `json:"nickname" gorm:"unique"`
-	Description string `json:"Description" gorm:"unique"`
-	Twitch      string `json:"Twitch" gorm:"unique"`
-	Youtube     string `json:"Youtube" gorm:"unique,foreignKey:PrivateStreamersYoutube"`
-	Telegram    string `json:"Telegram" gorm:"unique"`
+type User struct {
+	Username     string `gorm:"unique" json:"Username"`
+	Nickname     string `gorm:"primaryKey; unique" json:"Nickname"`
+	Password     string
+	PasswordHash string     `json:"PasswordHash"`
+	Role         uint8      `json:"Role"`
+	Streamers    []Streamer `gorm:"foreignKey:Nickname"`
 }
 
-type PrivateStreamers struct {
-	gorm.Model
-	Nickname    string
-	Name        string
-	Email       string
-	Youtube     string
-	Telegram    string
-	Password    string
-	PassHash    []byte
-	CreatedAt   int
-	LastLoginAt int
-	BalanceBTC  float32
-	BalanceTON  float32
-	BalanceETH  float32
+// Define the Streamer struct
+type Streamer struct {
+	Nickname    string     `gorm:"primaryKey" json:"Nickname"`
+	Description string     ` json:"Description"`
+	BTCBalance  float64    `json:"BTCBalance"`
+	ETHBalance  float64    `json:"ETHBalance"`
+	TONBalance  float64    `json:"TONBalance"`
+	Donations   []Donation `gorm:"foreignKey:Nickname" json:"Donations`
+	Telegram    string     ` json:"Telegram"`
+	Twitch      string     `json:"Twitch`
+	Youtube     string     ` json:"Youtube`
 }
 
-type Donations struct {
-	gorm.Model
-	FromNickname string
-	ToStreamer   string
-	Message      string
-	Coin         string
-	AmountCoin   float32
-	Status       int
-	Accounted    bool
+// Define the Donation struct
+type Donation struct {
+	From          string  `gorm:"primaryKey" json:"From"`
+	Nickname      string  `json:"ToStreamer"`
+	Message       string  `json:"Message"`
+	Coin          string  `json:"Coin"`
+	Amount        float64 `json:"Amount"`
+	PublicWallet  string  `gorm:"unique" json:"PublicWallet"`
+	PrivateWallet string  `gorm:"unique" json:"PrivateWallet"`
+	Status        uint8   `json:"Status"`
 }
 
-type accounting struct {
-	StreamerId int
-	InBtc      float64
-	InTon      float64
-	OutBtc     float64
-	OutTon     float64
-	OutEth     float64
+func (user *User) HashPassword(password string) error {
+	bytes, err := encrypt.GenerateFromPassword(password)
+	if err != nil {
+		return err
+	}
+	user.PasswordHash = string(bytes)
+	return nil
 }

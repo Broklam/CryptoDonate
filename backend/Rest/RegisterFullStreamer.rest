@@ -1,0 +1,12 @@
+@host = localhost:8080
+
+//Register with full info aka KYC
+ POST http://{{host}}/api/user/register/streamer/full HTTP/1.1
+content-type: application/json
+
+{
+    "Username":"VovaSolevoy",
+    "Nickname" : "VovaPain",
+    "Password" : "LizatOchenVkusno",
+    "Role": 1
+}

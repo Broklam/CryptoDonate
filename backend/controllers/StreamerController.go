@@ -13,25 +13,10 @@ type StreamerRequest struct {
 	Nickname string `json:"Nickname"`
 }
 
-type StreamerRegistrationRequest struct {
-	Nickname    string
-	Name        string
-	Email       string
-	Youtube     string
-	Telegram    string
-	Password    string
-	PassHash    string
-	CreatedAt   int
-	LastLoginAt int
-	BalanceBTC  float32
-	BalanceTON  float32
-	BalanceETH  float32
-}
-
 // Search streamer by name controller
 func FindStreamerByName(context *gin.Context) {
 	var request StreamerRequest
-	var streamer types.PublicStreamers
+	var streamer types.Streamer
 	record := storage.Instance.First(&streamer, request.Nickname)
 	if record.Error != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": record.Error.Error()})
@@ -39,4 +24,23 @@ func FindStreamerByName(context *gin.Context) {
 		return
 	}
 	context.JSON(http.StatusCreated, gin.H{"streamer": streamer})
+}
+
+func RegisterFullStreamer(context *gin.Context) {
+	var streamer types.Streamer
+
+	// You should bind the request body to the streamer struct.
+	if err := context.ShouldBindJSON(&streamer); err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// Create the streamer record in the database.
+	if err := storage.Instance.Create(&streamer).Error; err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	// Respond with a success message or the created streamer data.
+	context.JSON(http.StatusCreated, streamer)
 }

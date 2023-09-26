@@ -9,8 +9,14 @@ func InitRouter() *gin.Engine {
 	router := gin.Default()
 	api := router.Group("/api")
 	{
-		api.GET("/searchName", controllers.FindStreamerByName)
-		api.POST("/publicregister", nil)
+		api.POST("/user/register", controllers.RegisterUser)
+		api.POST("/user/register/streamer/full", controllers.RegisterFullStreamer)
+
+		//secured := api.Group("/secured").Use(middlewares.Auth())
+		//{
+		//	secured.GET("/ping", controllers.Tick)
+		//}
+		//}
 	}
 	return router
 }
