@@ -5,7 +5,7 @@ content-type: application/json
 
 {
     "Nickname":    "Stray229",
-	"name":        "Oleg",
+	"Name":        "Oleg",
 	"Email":       "228@mail.com",
 	"Youtube":     "kein",
 	"Telegram":    "telegram.com/stra28882",

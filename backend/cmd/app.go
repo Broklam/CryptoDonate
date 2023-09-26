@@ -13,4 +13,5 @@ func main() {
 	storage.Migrate()
 	router := server.InitRouter()
 	router.Run(":8080")
+
 }

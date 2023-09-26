@@ -4,6 +4,12 @@ import (
 	"gorm.io/gorm"
 )
 
+type Users struct {
+	gorm.Model
+	Username     string `json:"Username" gorm:"unique"`
+	PasswordHash string `json:"PasswordHash"`
+	Role         uint8  `json:"Role"` //0,1,2 as follows user, streamer,admin
+}
 type PublicStreamers struct {
 	gorm.Model
 	Nickname    string `json:"nickname" gorm:"unique"`
