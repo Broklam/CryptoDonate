@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"log"
 	"math/big"
+	"strings"
 
 	"github.com/btcsuite/btcutil/base58"
 	"github.com/ethereum/go-ethereum/common/hexutil"
@@ -90,8 +91,8 @@ func CreateTonWallet() (wif string, publickey string, tonaddress string) {
 	if err != nil {
 		panic(err)
 	}
-	wif = string(w.PrivateKey())
+	wif = strings.Join(words, " ")
 	tonaddress = w.Address().String()
-	publickey = string(w.Address().Data())
+	publickey = ""
 	return wif, publickey, tonaddress
 }

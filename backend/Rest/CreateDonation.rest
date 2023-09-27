@@ -5,9 +5,9 @@ content-type: application/json
 
 {
     "From" : "flö",
-	"ToStreamer" : "VovaPain",
+	"ToStreamer" : "Stray228",
 	"Message": "Final Donation system test",
-	"Coin":"eth",
+	"Coin":"ton",
 	"Amount" : 1.1,      
 	"Status": 1
 }	
