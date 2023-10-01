@@ -178,3 +178,23 @@ func BalanceSum() {
 	// Wait for all updates to finish before exiting.
 	wg.Wait()
 }
+
+func DeleteUserByID(username string) error {
+	// Assuming you have a GORM database connection called "db" set up
+
+	// First, check if the user exists
+	var user types.User
+	if err := Instance.Where("username = ?", username).First(&user).Error; err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return err // User not found
+		}
+		return err // Other database error
+	}
+
+	// If the user exists, delete them
+	if err := Instance.Delete(&user).Error; err != nil {
+		return err // Error occurred during deletion
+	}
+
+	return nil // User deleted successfully
+}

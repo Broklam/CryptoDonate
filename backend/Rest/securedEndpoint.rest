@@ -1,0 +1,9 @@
+@host = localhost:8080
+
+//Secure endpoint auth
+POST http://{{host}}/api/token/ HTTP/1.1
+content-type: application/json
+
+{
+    "Username":"Stray228"
+}

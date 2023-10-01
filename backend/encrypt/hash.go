@@ -25,11 +25,19 @@ type Params struct {
 	KeyLength   uint32
 }
 
-func ComparePasswordAndHash(password, encodedHash string) (match bool, err error) {
+func ComparePasswordAndHash(password string, encodedHash string) (match bool, err error) {
 	// Extract the parameters, salt and derived key from the encoded password
 	// hash.
+	p := &Params{
+		Memory:      64 * 1024,
+		Iterations:  3,
+		Parallelism: 2,
+		SaltLength:  16,
+		KeyLength:   32,
+	}
 	p, salt, hash, err := decodeHash(encodedHash)
 	if err != nil {
+
 		return false, err
 	}
 

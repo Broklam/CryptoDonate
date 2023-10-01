@@ -7,9 +7,9 @@ import (
 )
 
 type User struct {
-	Username     string `gorm:"unique" json:"Username"`
-	Nickname     string `gorm:"primaryKey; unique" json:"Nickname"`
-	Password     string
+	Username     string     `gorm:"unique" json:"Username"`
+	Nickname     string     `gorm:"primaryKey; unique" json:"Nickname"`
+	Password     string     `json:"Nickname"`
 	PasswordHash string     `json:"PasswordHash"`
 	Role         uint8      `json:"Role"`
 	Streamers    []Streamer `gorm:"foreignKey:Nickname"`
@@ -54,4 +54,12 @@ func (user *User) HashPassword(password string) error {
 	}
 	user.PasswordHash = string(bytes)
 	return nil
+}
+
+func (user *User) CheckPassword(providedPassword string) (err error, result bool) {
+	result, err = encrypt.ComparePasswordAndHash(providedPassword, user.PasswordHash)
+	if err != nil {
+		return err, false
+	}
+	return err, result
 }

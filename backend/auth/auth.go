@@ -1,19 +1,25 @@
 package auth
+
 import (
+	//"encoding/hex"
 	"errors"
 	"time"
+
 	"github.com/dgrijalva/jwt-go"
 )
+
 var jwtKey = []byte("supersecretkey")
+
 type JWTClaim struct {
 	Username string `json:"username"`
-	Email    string `json:"email"`
+	Nickname string `json:"nickname"`
 	jwt.StandardClaims
 }
-func GenerateJWT(email string, username string) (tokenString string, err error) {
+
+func GenerateJWT(nickname string, username string) (tokenString string, err error) {
 	expirationTime := time.Now().Add(1 * time.Hour)
-	claims:= &JWTClaim{
-		Email: email,
+	claims := &JWTClaim{
+		Nickname: nickname,
 		Username: username,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: expirationTime.Unix(),
