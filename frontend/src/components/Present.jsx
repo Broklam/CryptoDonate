@@ -25,8 +25,8 @@ return (
         </div>
         <p className='md:text-2xl text-xl font-bold text-white'>Take a look at documentation or explore now!</p>
         <div className='flex justify-center py-6'>
-        <button className='bg-[#cb4f4f] w-[200px] rounded-md font-medium  mx-10 py-4 col-auto text-white column-1'><a href="http://localhost:3000/faq">FAQ</a></button>
-        <button className='bg-[#cb4f4f] w-[200px] rounded-md font-medium  mx-10 py-4 text-white '><a href="http://localhost:3000/search">Search</a></button>
+        <button className='bg-[#cb4f4f] w-[200px] rounded-md font-medium  mx-10 py-4 col-auto text-white column-1'>FAQ</button>
+        <button className='bg-[#cb4f4f] w-[200px] rounded-md font-medium  mx-10 py-4 text-white '>Search</button>
         </div>
       
       </div>
