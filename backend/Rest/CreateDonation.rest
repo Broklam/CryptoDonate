@@ -9,5 +9,5 @@ content-type: application/json
 	"Message": "Final Donation system test",
 	"Coin":"btc",
 	"Amount" : 1,      
-	"Status": "Created"
+	"Status": 1
 }	
